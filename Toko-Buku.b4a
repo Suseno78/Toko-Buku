@@ -1,0 +1,113 @@
+﻿Build1=Default,b4a.example
+File1=0.png
+File10=9.png
+File11=Layout.bal
+File2=1.png
+File3=2.png
+File4=3.png
+File5=4.png
+File6=5.png
+File7=6.png
+File8=7.png
+File9=8.png
+FileGroup1=Default Group
+FileGroup10=Default Group
+FileGroup11=Default Group
+FileGroup2=Default Group
+FileGroup3=Default Group
+FileGroup4=Default Group
+FileGroup5=Default Group
+FileGroup6=Default Group
+FileGroup7=Default Group
+FileGroup8=Default Group
+FileGroup9=Default Group
+Group=Default Group
+Library1=core
+Library2=xui
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="34"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~
+Module1=Starter
+NumberOfFiles=11
+NumberOfLibraries=2
+NumberOfModules=1
+Version=13
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: Toko Buku
+	#VersionCode: 1
+	#VersionName: 
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+	Private xui As XUI
+End Sub
+
+Sub Globals
+	'These global variables will be redeclared each time the activity is created.
+	Private Listbook As ListView
+	Public Nama() As String
+	Public Harga() As String
+	Public Deskripsi() As String
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	Activity.LoadLayout("Layout")
+	Nama = Array As String("Buku Sains", "Buku Cinta", "Buku Musik", "Al-Quran", "Buku Semesta", "Buku Catatan", "Buku Timbangan", "Buku Sihir", "Buku Cerita", "Buku Sekolah")
+	Harga = Array As String("Rp50.000", "Rp60.000", "Rp65.000", "Rp70.000", "Rp70.000", "Rp30.000", "Rp40.000", "Rp50.000", "Rp60.000", "Rp65.000")
+	Deskripsi = Array As String("Membahas tentang sains", _
+								"Membahas tentang cinta", _ 
+								"Kumpulan musik baru dan lama", _
+								"Berisi Ayat Al-Quran dan Surat Surat", _
+								"Berisi planet dan alam semesta", _
+								"Catataan sehari-hari", _
+								"Membahas tentang timbangan", _
+								"Kumpulan beberapa mantra", _
+								"Kumpulan cerita pendek", _
+								"Membahas tentang pelajaran sekolah")
+	
+	For i = 0 To Nama.Length - 1
+		Dim deskripsipendek As String
+		If Deskripsi(i).Length > 100 Then
+			deskripsipendek = Deskripsi(i).SubString2(0, 100) & "..." 
+			
+		Else
+			deskripsipendek = Deskripsi(i)	
+			
+		End If
+		Listbook.AddTwoLinesAndBitmap(Nama(i),Harga(i) & CRLF & deskripsipendek & CRLF, _
+		LoadBitmap(File.DirAssets,i&".png"))
+	Next
+	
+	Listbook.TwoLinesAndBitmap.ItemHeight=100dip
+	Listbook.TwoLinesAndBitmap.ImageView.Height=80dip
+	Listbook.TwoLinesAndBitmap.ImageView.Width=80dip
+	Listbook.TwoLinesAndBitmap.Label.Left=100dip
+	Listbook.TwoLinesAndBitmap.SecondLabel.Left=100dip
+	
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+Sub Button1_Click
+	xui.MsgboxAsync("Hello world!", "B4X")
+End Sub
+
+Private Sub Listbook_ItemClick (Position As Int, Value As Object)
+	xui.MsgboxAsync(Nama(Position) & CRLF & Harga(Position) & CRLF & Deskripsi(Position), "Detail")
+	
+End Sub
